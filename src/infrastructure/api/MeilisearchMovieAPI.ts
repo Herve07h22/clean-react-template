@@ -17,7 +17,6 @@ export class MeilisearchMovieAPI implements MovieAPI {
       estimatedTotalHits: number;
       hits: Movie[];
     };
-    console.log(searchResult);
     return searchResult.hits;
   }
 

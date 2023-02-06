@@ -1,10 +1,11 @@
+import { EcommerceApp, Dependencies } from "core/app";
 import { makeAutoObservable } from "mobx";
 import { User } from "./User";
 
 export class UserSession {
   public loading = false;
   public loggedUser: User | null = null;
-  constructor() {
+  constructor(private dependencies: Dependencies, private app: EcommerceApp) {
     makeAutoObservable(this);
   }
 

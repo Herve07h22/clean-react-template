@@ -1,15 +1,16 @@
-import reactLogo from './assets/react.svg'
 import './App.css'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import { Login } from './pages/Login'
 import { Layout} from './components/layout/Layout'
-import { catalog, userSession } from 'core/app'
+import { EcommerceApp } from 'core/app'
 import { RequireAuth } from './components/auth/RequireAuth'
 import { Error404 } from './pages/Error404'
 import { HomePage } from './pages/HomePage'
+import { productionDependencies } from 'infrastructure/dependencies'
+
+export const app = new EcommerceApp(productionDependencies())
 
 function App() {
-
   return (
     <RouterProvider router={router} />
   )
@@ -17,14 +18,14 @@ function App() {
 
 const router = createBrowserRouter(
   createRoutesFromElements([
-    <Route path="/login" element={<Login userSession={userSession} />} />,
+    <Route path="/login" element={<Login userSession={app.userSession} />} />,
     <Route element={<Layout />}>
       <Route
         path="/"
-        loader={async ({}) => catalog.init()}
+        loader={async ({}) => app.catalog.init()}
         element={
           <RequireAuth>
-            <HomePage catalog={catalog} />
+            <HomePage catalog={app.catalog} />
           </RequireAuth>
         }
       />

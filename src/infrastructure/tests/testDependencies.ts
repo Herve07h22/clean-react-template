@@ -1,5 +1,5 @@
 import { TestMovieAPI } from "./TestMovieAPI";
 
-export const testDependencies = {
+export const testDependencies = () => ({
   movieAPI: new TestMovieAPI(),
-};
+});
