@@ -10,6 +10,8 @@ type LoginForm = {
 };
 
 export const Login: React.FC<{userSession:UserSession}> = observer(({userSession}) => {
+  // Local state to manage the form's state.
+  // No need to push it to the core app.
   const [formState, setFormState] = useState<LoginForm>({
     remember: true,
     email: "",

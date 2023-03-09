@@ -10,12 +10,28 @@ export class Catalog {
   constructor(private dependencies: Dependencies, private app: EcommerceApp) {
     makeAutoObservable(this);
   }
+
+  /* ***************************************
+  ** Why this init() method ?
+  ** It's a convenient way to fetch the data 
+  ** without waiting for the React component 
+  ** to mount.
+  ** See App.tsx :
+  ** <Route
+        path="/"
+        loader={async ({}) => app.catalog.init()}
+        element={
+          <RequireAuth>
+            <HomePage catalog={app.catalog} />
+          </RequireAuth>
+        }
+      />
+  ** */
+
   init() {
-    // What should be displayed by default ?
     if (!this.searchBar) {
       this.dependencies.movieAPI.search("Batman").then(this.updateMovieList);
     }
-    // Mind that will be fect BEFORE the rendering, thank to loader in the route declaration
     return this;
   }
 
@@ -25,13 +41,13 @@ export class Catalog {
     this.getMatchingMovies(query);
   }
 
-  updateMovieList = (movies: Movie[]) => {
-    this.movies = movies;
-    this.loading = false;
-  };
-
-  @debounce(100)
+  @debounce(300)
   private async getMatchingMovies(query: string) {
     return this.dependencies.movieAPI.search(query).then(this.updateMovieList);
   }
+
+  private updateMovieList = (movies: Movie[]) => {
+    this.movies = movies;
+    this.loading = false;
+  };
 }
