@@ -1,8 +1,15 @@
 import { MovieAPI } from "core/movie/interfaces/MovieAPI";
 import { Movie } from "core/movie/models/Movie";
 
+console.log(
+  "import.meta.env.VITE_MEILISEARCH_API:",
+  import.meta.env.VITE_MEILISEARCH_API
+);
+
 export class MeilisearchMovieAPI implements MovieAPI {
   async search(query: string) {
+    if (!import.meta.env.VITE_MEILISEARCH_API)
+      throw new Error("VITE_MEILISEARCH_API is not set");
     const results = await fetch(import.meta.env.VITE_MEILISEARCH_API, {
       method: "POST",
       headers: new Headers({
@@ -13,6 +20,7 @@ export class MeilisearchMovieAPI implements MovieAPI {
       cache: "default",
       body: this.makeBody(query, 9),
     });
+
     const searchResult = (await results.json()) as {
       estimatedTotalHits: number;
       hits: Movie[];

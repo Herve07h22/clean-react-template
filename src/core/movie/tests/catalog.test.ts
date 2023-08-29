@@ -2,7 +2,6 @@ import { EcommerceApp } from "core/app";
 import { wait } from "core/utils/debounce";
 import { testDependencies } from "infrastructure/tests/testDependencies";
 import { it, expect } from "vitest";
-import { Catalog } from "../Catalog";
 
 it("Should init with a list fo Batman movies when no search has been done yet", async () => {
   const { catalog } = new EcommerceApp(testDependencies());
@@ -11,12 +10,13 @@ it("Should init with a list fo Batman movies when no search has been done yet", 
   expect(catalog.movies[0].title).toBe("Batman");
 });
 
-it("Should init with a previous search", async () => {
+it("Should keep the current search when going back to homepage", async () => {
   const { catalog } = new EcommerceApp(testDependencies());
   await catalog.init();
   await catalog.search("Superman");
   await wait(105); // Search is debounced
-  await catalog.init();
+
+  await catalog.init(); // back to homepage
   expect(catalog.movies.length).toBe(1);
   expect(catalog.movies[0].title).toBe("Superman");
 });
@@ -30,6 +30,7 @@ it("Should debounce the search", async () => {
   expect(catalog.loading).toBe(true);
   await catalog.search("Batman"); // Debounced
   await catalog.search("Bat"); // Debounced
+  expect(catalog.loading).toBe(true);
   await catalog.search("Superman"); // 2nd call
   await wait(105);
   expect(catalog.loading).toBe(false);

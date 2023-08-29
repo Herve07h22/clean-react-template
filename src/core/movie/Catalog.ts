@@ -28,20 +28,23 @@ export class Catalog {
       />
   ** */
 
-  init() {
+  async init() {
     if (!this.searchBar) {
-      this.dependencies.movieAPI.search("Batman").then(this.updateMovieList);
+      // Default homepage => result of "Batman" search
+      await this.dependencies.movieAPI
+        .search("Batman")
+        .then(this.updateMovieList);
     }
     return this;
   }
 
-  search(query: string) {
+  async search(query: string) {
     this.searchBar = query;
     this.loading = true;
-    this.getMatchingMovies(query);
+    await this.getMatchingMovies(query);
   }
 
-  @debounce(300)
+  @debounce(100)
   private async getMatchingMovies(query: string) {
     return this.dependencies.movieAPI.search(query).then(this.updateMovieList);
   }
