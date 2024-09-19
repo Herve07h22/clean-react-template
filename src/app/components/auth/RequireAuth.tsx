@@ -1,15 +1,17 @@
-import { app } from "app/App";
-import { Navigate, useLocation } from "react-router-dom";
+import { UserSession } from "core/auth/UserSession";
+import { observer } from "mobx-react-lite";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
+type RequireAuthProps = {
+  session: UserSession;
+};
 
-export function RequireAuth({ children }: { children: JSX.Element }) {
-    let location = useLocation();
-  
-    if (!app.userSession.isLogged) {
-      return <Navigate to="/login" state={{ from: location }} replace />;
-    }
-  
-    return children;
+export const RequireAuth = observer(({ session }: RequireAuthProps) => {
+  let location = useLocation();
+
+  if (!session.isLogged) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  
+  return <Outlet />;
+});

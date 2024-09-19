@@ -1,5 +1,5 @@
-import { MeilisearchMovieAPI } from "./api/MeilisearchMovieAPI";
+import { FreeTestAPI } from "./api/FreeTestAPI";
 
 export const productionDependencies = () => ({
-  movieAPI: new MeilisearchMovieAPI(),
+  movieAPI: new FreeTestAPI(),
 });

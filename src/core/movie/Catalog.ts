@@ -32,7 +32,7 @@ export class Catalog {
     if (!this.searchBar) {
       // Default homepage => result of "Batman" search
       await this.dependencies.movieAPI
-        .search("Batman")
+        .search("")
         .then(this.updateMovieList);
     }
     return this;

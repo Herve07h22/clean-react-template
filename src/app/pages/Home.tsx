@@ -3,7 +3,7 @@ import { MoviesList } from "app/components/movie/MoviesList";
 import { Catalog } from "core/movie/Catalog";
 import { observer } from "mobx-react-lite";
 
-export const HomePage: React.FC<{ catalog: Catalog }> = observer(
+export const Home: React.FC<{ catalog: Catalog }> = observer(
   ({ catalog }) => {
     return (
       <div>
