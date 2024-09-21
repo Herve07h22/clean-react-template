@@ -1,6 +1,6 @@
 import { EcommerceApp, Dependencies } from "core/app";
 import { makeAutoObservable } from "mobx";
-import { User } from "./User";
+import { User } from "../models/User";
 
 export class UserSession {
   public loading = false;

@@ -3,11 +3,10 @@ import { wait } from "core/utils/debounce";
 import { testDependencies } from "infrastructure/tests/testDependencies";
 import { it, expect } from "vitest";
 
-it("Should init with a list fo Batman movies when no search has been done yet", async () => {
+it("Should init with a random list of movies when no search has been done yet", async () => {
   const { catalog } = new EcommerceApp(testDependencies());
   await catalog.init();
-  expect(catalog.movies.length).toBe(1);
-  expect(catalog.movies[0].title).toBe("Batman");
+  expect(catalog.movies.length).toBe(2);
 });
 
 it("Should keep the current search when going back to homepage", async () => {

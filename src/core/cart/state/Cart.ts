@@ -3,14 +3,18 @@ import { Movie } from "core/movie/models/Movie";
 import { makeAutoObservable } from "mobx";
 
 export class Cart {
-  movies: Movie[] = [];
+  movies = new Map<Movie["id"], Movie>();
   constructor(private dependencies: Dependencies, private app: EcommerceApp) {
     makeAutoObservable(this);
   }
   addToCart(movie: Movie) {
-    this.movies.push(movie);
+    this.movies.set(movie.id, movie)
   }
   get nbOfItemsInCart() {
-    return this.movies.length;
+    return this.movies.size;
   }
+  list () : Movie[] {
+    return Array.from(this.movies.values())
+  }
+
 }

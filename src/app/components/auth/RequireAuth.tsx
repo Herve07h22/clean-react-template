@@ -1,4 +1,4 @@
-import { UserSession } from "core/auth/UserSession";
+import { UserSession } from "core/auth/state/UserSession";
 import { observer } from "mobx-react-lite";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 

@@ -1,7 +1,7 @@
 import { EcommerceApp, Dependencies } from "core/app";
 import { debounce } from "core/utils/debounce";
 import { makeAutoObservable } from "mobx";
-import { Movie } from "./models/Movie";
+import { Movie } from "../models/Movie";
 
 export class Catalog {
   searchBar: string = "";

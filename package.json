@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "tsc && vitest"
   },
   "dependencies": {
     "mobx": "^6.7.0",
