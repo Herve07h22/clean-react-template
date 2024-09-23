@@ -9,3 +9,4 @@ export function isJust<T>(maybe: Maybe<T>):maybe is T {
 export function whenNothing<T>(defaultValue :T, maybe: Maybe<T>):T {
     return isJust(maybe) ? maybe : defaultValue
 }
+

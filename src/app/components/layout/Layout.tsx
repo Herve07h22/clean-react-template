@@ -1,41 +1,44 @@
+import { app } from "app/App";
 import { Button } from "app/ui/buttons/Button";
-import { UserSession } from "core/auth/state/UserSession";
-import { Cart } from "core/cart/state/Cart";
 import { observer } from "mobx-react-lite";
 import { Link, Outlet } from "react-router-dom";
 
-export const Layout: React.FC<{ cart: Cart; session: UserSession }> = observer(
-  ({ cart, session }) => {
-    return (
-      <div>
-        <div className="flex justify-between items-center flex-wrap h-full g-6 text-gray-800 mb-1">
-          <h1>Fake App</h1>
+export const Layout = observer(() => {
+  const { trade, userSession } = app;
+  return (
+    <div className="p-4 bg-black text-base">
+      <div className="flex justify-between items-center flex-wrap h-full g-6 text-neon-green mb-1">
+        <div className="h-12 w-12"><Link to="/"><img src="/cryptotrade.webp"/></Link></div>
 
-          {cart.nbOfItemsInCart > 0 ? (
-            <div className="flex items-center gap-4">
-              {cart.nbOfItemsInCart} movie(s) added
-              <Link to="/checkout">
-                <Button>Checkout</Button>
+        {trade.nbOfPendingTrades > 0 ? (
+          <div className="flex gap-2 items-center">
+          <span>{trade.nbOfPendingTrades} trade(s) added</span>
+          <Link to="/flush">
+                <Button>Flush</Button>
               </Link>
-            </div>
-          ) : (
-            <span>No item in your cart</span>
-          )}
+          </div>
+        ) : (
+          <span>🚫 No pending trade</span>
+        )}
 
-          {session.isLogged ? (
-            <div className="flex gap-2 items-center">
-              <span>Welcome {session.loggedUser?.name}</span>
-              <Button onClick={() => session.logout()}>Logout</Button>
-            </div>
-          ) : (
-            <Link to="/login">
-              <Button>Login</Button>
+        {userSession.isLogged ? (
+          <div className="flex gap-2 items-center">
+            <Link to="/">
+              <Button>Market</Button>
             </Link>
-          )}
-        </div>
-
-        <Outlet />
+            <Link to="/portfolio">
+              <Button>Porfolio</Button>
+            </Link>
+            <Button onClick={() => userSession.logout()}>Logout</Button>
+          </div>
+        ) : (
+          <Link to="/login">
+            <Button>Login</Button>
+          </Link>
+        )}
       </div>
-    );
-  }
-);
+
+      <Outlet />
+    </div>
+  );
+});

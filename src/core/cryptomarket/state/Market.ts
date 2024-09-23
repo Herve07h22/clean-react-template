@@ -1,13 +1,13 @@
-import { EcommerceApp, Dependencies } from "core/app";
+import { CryptoTradingApp, Dependencies } from "core/app";
 import { debounce } from "core/utils/debounce";
 import { makeAutoObservable } from "mobx";
-import { Movie } from "../models/Movie";
+import { CryptoAsset } from "../models/CryptoAsset";
 
-export class Catalog {
+export class Market {
   searchBar: string = "";
   loading = false;
-  movies: Movie[] = [];
-  constructor(private dependencies: Dependencies, private app: EcommerceApp) {
+  assets: CryptoAsset[] = [];
+  constructor(private dependencies: Dependencies, private app: CryptoTradingApp) {
     makeAutoObservable(this);
   }
 
@@ -31,7 +31,7 @@ export class Catalog {
   async init() {
     if (!this.searchBar) {
       // Default homepage => result of "Batman" search
-      await this.dependencies.movieAPI
+      await this.dependencies.marketAPI
         .search("")
         .then(this.updateMovieList);
     }
@@ -46,11 +46,11 @@ export class Catalog {
 
   @debounce(100)
   private async getMatchingMovies(query: string) {
-    return this.dependencies.movieAPI.search(query).then(this.updateMovieList);
+    return this.dependencies.marketAPI.search(query).then(this.updateMovieList);
   }
 
-  private updateMovieList = (movies: Movie[]) => {
-    this.movies = movies;
+  private updateMovieList = (movies: CryptoAsset[]) => {
+    this.assets = movies;
     this.loading = false;
   };
 }

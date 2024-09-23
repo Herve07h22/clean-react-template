@@ -1,23 +1,28 @@
 import { UserSession } from "core/auth/state/UserSession";
-import { productionDependencies } from "infrastructure/dependencies";
 import { makeAutoObservable } from "mobx";
-import { Cart } from "./cart/state/Cart";
-import { Catalog } from "./movie/state/Catalog";
-import { MovieAPI } from "./movie/interfaces/MovieAPI";
+import { Trade } from "./portfolio/state/Trade";
+import { Market } from "./cryptomarket/state/Market";
+import { MarketAPI } from "./cryptomarket/interfaces/MarketAPI";
+import { portfolioAPI } from "./portfolio/interfaces/PortfolioAPI";
+import { Portfolio } from "./portfolio/state/Portfolio";
 
 export type Dependencies = {
-  movieAPI: MovieAPI;
+  marketAPI: MarketAPI;
+  portfolioAPI: portfolioAPI;
 };
 
-export class EcommerceApp {
+export class CryptoTradingApp {
   // Testable state of our app.
   // Sliced into substates
   userSession: UserSession;
-  catalog: Catalog;
-  cart: Cart;
+  market: Market;
+  trade: Trade;
+  portfolio:Portfolio;
   constructor(dependencies: Dependencies) {
     this.userSession = new UserSession(dependencies, this);
-    this.catalog = new Catalog(dependencies, this);
-    this.cart = new Cart(dependencies, this);
+    this.market = new Market(dependencies, this);
+    this.trade = new Trade(dependencies, this);
+    this.portfolio = new Portfolio(dependencies, this);
+    makeAutoObservable(this);
   }
 }

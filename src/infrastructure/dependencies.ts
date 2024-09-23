@@ -1,5 +1,7 @@
-import { FreeTestAPI } from "./api/FreeTestAPI";
+import { CoinCapAPI } from "./api/CoinCapAPI";
+import { TestPortfolioAPI } from "./tests/TestPortfolioAPI";
 
 export const productionDependencies = () => ({
-  movieAPI: new FreeTestAPI(),
+  marketAPI: new CoinCapAPI(),
+  portfolioAPI: new TestPortfolioAPI(), // We do not have the beackend ready yet. But the client is expecting the demo !
 });

@@ -1,5 +1,7 @@
-import { TestMovieAPI } from "./TestMovieAPI";
+import { TestMarketAPI } from "./TestMarketAPI";
+import { TestPortfolioAPI } from "./TestPortfolioAPI";
 
 export const testDependencies = () => ({
-  movieAPI: new TestMovieAPI(),
+  marketAPI: new TestMarketAPI(),
+  portfolioAPI: new TestPortfolioAPI(),
 });
